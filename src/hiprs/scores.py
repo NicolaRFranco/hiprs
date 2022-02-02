@@ -106,7 +106,7 @@ class PRS(Classifier):
             y       (numpy.ndarray)       observed outcomes in the training data.
             penalty (string)              type of penalty to be added during the optimization.
         """
-        xdummies = pandas.get_dummies(x.astype('category'))
+        xdummies = pd.get_dummies(x.astype('category'))
         self.penalty = penalty
         self.l1_ratio = None
         if(penalty == 'l1'):
