@@ -12,7 +12,7 @@ from hiprs.mrmr import mRMR
 
 class Classifier(object):
     """Abstract class representing a generic classification model. All objects of this class should have the following attributes:
-
+    
        Attributes:
            model    (Object)         An object provided with the method 'predict_proba'. The latter should take
                                      as input the observed covariates X and should return an Nx2 array of predicted
@@ -21,46 +21,58 @@ class Classifier(object):
            clock    (hiprs.Clock)    An object used to measure the fitting time.
            covs     (list)           A list of strings that label the model covariates.
     """
-
+    
     def auc(self, xtest, ytest):
         """Computes the Area Under the ROC Curve using the provided test data.
         Input:
             xtest    (pandas.DataFrame)    observed covariates in the test data
             ytest    (numpy.ndarray)       observed outcomes in the test data
-
-        Output:
+        
+        Output: 
             (float) AUC score.
-
+        
         Note: the method assumes that the model has been fitted already."""
         yscores = self.predict(xtest)
         return roc_auc_score(ytest, yscores)
-
+    
     def ap(self, xtest, ytest):
         """Computes the Average Precision over the provided test data.
         Input:
             xtest    (pandas.DataFrame)    observed covariates in the test data
             ytest    (numpy.ndarray)       observed outcomes in the test data
-
-        Output:
+        
+        Output: 
             (float) AP score.
-
+        
         Note: the method assumes that the model has been fitted already."""
         yscores = self.predict(xtest)
         return average_precision_score(ytest, yscores)
-
+    
     def predict(self, x):
         """Returns the predicted probability that Y = 1 given X.
         Input:
             x    (pandas.DataFrame)    observed value of the covariates X.
-
+        
         Output:
             (numpy.ndarray) Estimates for P(Y = 1 | X = x)."""
         return self.model.predict_proba(x)[:,1]
-
+    
+    def score(self, x):
+        """Returns the model score at a given X. The score is computed as logit( P(Y = 1 | X = x)) - m,
+        where m is the model intercept.
+        Input:
+            x    (pandas.DataFrame)    observed value of the covariates X.
+        
+        Output:
+            (numpy.ndarray) Estimates for logit(P(Y = 1 | X = x)) - m."""
+        
+        p = self.predict(x)
+        return np.log(p) - np.log(1-p) - self.model.intercept_
+    
     def fittingtime(self):
         """Returns the amount of time (seconds) elapsed while fitting the classifier."""
         return self.clock.elapsed()
-
+    
     def betas(self):
         """Returns predictors and corresponding coefficients in the fitted ADDITIVE model.
         Output:
@@ -69,19 +81,32 @@ class Classifier(object):
         mask = self.model.coef_[0] != 0
         return {cov:val for cov, val in zip(self.covs[mask], self.model.coef_[0][mask])}
 
-class LogisticRegression(Classifier):
-    """Implementation of the Logistic Regression model as a subclass of 'Classifier'.
+class PRS(Classifier):
+    """Implementation of an additive PRS based on Logistic Regression model. 
     Objects of this class have the following additional attributes:
-
+    
     Attributes:
         penalty    (string)    string that specifies whether a penalty term is added during the loglikelihood optimization.
                                Accepted values are 'none', 'l1' (Lasso regression), 'elasticnet' and 'l2' (Ridge regression).
         l1_ratio   (float)     Proportion of l1 penalty vs l2 penalty. Automatically deduced from self.penalty.
         solver     (string)    Solver to be used for fitting the model. Automatically deduced from self.penalty.
                                """
-
-    def __init__(self, penalty = 'none'):
-        """Initialize a Logistic Regression model given a specified penalty (string). Default value is penalty = 'none'."""
+    
+    def __init__(self):
+        """Initialize the PRS."""
+        self.penalty = None
+        self.l1_ratio = None
+        self.solver = None
+        self.clock = Clock()
+            
+    def fit(self, x, y, penalty = 'none'):
+        """Fits the Logistic Regression model over the given training data.
+        Input:
+            x       (pandas.DataFrame)    observed values of the covariates in the training data.
+            y       (numpy.ndarray)       observed outcomes in the training data.
+            penalty (string)              type of penalty to be added during the optimization.
+        """
+        xdummies = pandas.get_dummies(x.astype('category'))
         self.penalty = penalty
         self.l1_ratio = None
         if(penalty == 'l1'):
@@ -93,34 +118,29 @@ class LogisticRegression(Classifier):
             self.solver = 'lbfgs'
         else:
             raise RuntimeError("Unrecognized penalty type.")
-        self.clock = Clock()
-
-    def fit(self, x, y):
-        """Fits the Logistic Regression model over the given training data.
-        Input:
-            x    (pandas.DataFrame)    observed values of the covariates in the training data.
-            y    (numpy.ndarray)       observed outcomes in the training data.
-        """
         self.clock.start()
         self.model = LM.LogisticRegression(penalty = self.penalty, max_iter = 500,
-                                           solver = self.solver, l1_ratio = self.l1_ratio).fit(x, y)
+                                           solver = self.solver, l1_ratio = self.l1_ratio).fit(xdummies, y)
         self.clock.stop()
-        self.covs = np.array([str(s) for s in x.columns])
-
-class LassoLR(LogisticRegression):
-    """Subclass of the Logistic Regression Classifier that implements the Lasso regression."""
-    def __init__(self):
-        super(LassoLR, self).__init__(penalty = 'l1')
-
-class RidgeLR(LogisticRegression):
-    """Subclass of the Logistic Regression Classifier that implements the Ridge regression."""
-    def __init__(self):
-        super(RidgeLR, self).__init__(penalty = 'l2')
-
-class ElasticNetLR(LogisticRegression):
-    """Subclass of the Logistic Regression Classifier that implements the Elastic-Net regression."""
-    def __init__(self):
-        super(ElasticNetLR, self).__init__(penalty = 'elasticnet')
+        self.covs = np.array([str(s) for s in xdummies.columns])
+        
+    def transform(self, x):
+        """Given observed values of the covariates x, returns the corresponding dummified dataset 
+        (ignoring possibly unseen levels during training).
+        Input:
+            x    (pandas.DataFrame)    observed values of the covariates.
+       
+        Output:
+            (pandas.DataFrame) dummified version of x.
+            """
+        res = {str(k):None for k in self.covs}
+        for k in self.covs:
+            snp, val = str(k).split("_")
+            res[str(k)] = (x[snp] == int(val))+0
+        return pd.DataFrame(res)
+    
+    def predict(self, x):
+        return super(PRS, self).predict(self.transform(x))
 
 
 class hiPRS(Classifier):
