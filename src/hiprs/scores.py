@@ -1,5 +1,5 @@
-import numpy
-import pandas
+import numpy as np
+import pandas as pd
 from time import perf_counter
 from mlxtend.frequent_patterns import apriori
 from scipy.stats import norm
@@ -217,7 +217,7 @@ class hiPRS(Classifier):
         self.establish_encoding(covariates_data)
         cov_ds = self.dummies_dict.encrypt(covariates_data)
         cov_ds = cov_ds.astype('category')
-        dummy_cov = pandas.get_dummies(cov_ds, dtype = bool)
+        dummy_cov = pd.get_dummies(cov_ds, dtype = bool)
 
         ones = (target_data == 1).values
         zeros = (target_data == 0).values
@@ -276,7 +276,7 @@ class hiPRS(Classifier):
         display.printf("Computing relevance and redundancy measures...")
         self.relevances = mutual_info(self.table.iloc[:,:-1], self.table.iloc[:,-1])
         variables = self.dummies_dict.lab_map.keys()
-        res = pandas.DataFrame({var:[""]*len(self.interactions) for var in variables})
+        res = pd.DataFrame({var:[""]*len(self.interactions) for var in variables})
         for k, i in enumerate(self.interactions):
             for vr, vs in zip(i.vars, i.values):
                 res[vr][k] = vs
