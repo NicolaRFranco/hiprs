@@ -8,7 +8,7 @@ from sklearn import linear_model as LM
 from sklearn.metrics import average_precision_score
 from sklearn.metrics import roc_auc_score
 from hiprs.interactions import DummiesDictionary, Pattern, Interaction
-from hiprs.mrmr import mRMR
+from hiprs.mrmr import mRMR, mutual_info
 
 class Classifier(object):
     """Abstract class representing a generic classification model. All objects of this class should have the following attributes:
