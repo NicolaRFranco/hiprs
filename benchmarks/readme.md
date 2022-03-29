@@ -6,8 +6,8 @@ In particular, it consists of 4 files for the benchmark experiments run on *simu
 1. _**hiPRS and Penalized PRSs.ipynb**_: a Jupyter Notebook that contains the code to run hiPRS and the benchmark Penalized PRSs (Lasso and Ridge penalizations) and collect results for the experiments described in Massi, Franco et al.
 2. _**behravan.ipynb**_: a Jupyter Notebook that contains the python modules to run the algorithm described in [1]. The original code was collected from [2]. In the same notebook we include the code to run the benchmark experiment described in our paper.
 This notebook generates and stores the simulated datasets, with our custom python function, that are automatically imported in the R file described below.
-3. **glinternet.R**: an R script that runs the glinternet algorithm [3], freely distributed in the CRAN: [4]. This file uploads the simulated datasets generated in behravan.ipynb, therefore, to run this script they have to be located in the same working directory.
-4. a Jupyter Notebook containing the source code to run the Deep Neural Network-based algorithm described in [5].
+3. _**glinternet.R**_: an R script that runs the glinternet algorithm [3], freely distributed in the CRAN: [4]. This file uploads the simulated datasets generated in behravan.ipynb, therefore, to run this script they have to be located in the same working directory.
+4. _**badre.ipynb**_: a Jupyter Notebook containing the source code to run the Deep Neural Network-based algorithm described in [5].
 
 
 Moreover, it includes a file to run the case study experiment on DACHS data:
