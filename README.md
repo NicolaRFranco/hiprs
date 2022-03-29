@@ -8,7 +8,7 @@ The repository consists of:
     - *mrmr.py* an auxiliary module that implements Maximum Relevance — Minimum Redundancy algorithms; 
     - *snps.py* an auxiliary module used for data simulation. 
     
-  All the modules come with a complete internal documentation: e.g., after having imported the module *hiprs.scores*, run the command **help(hiPRS)** to see further  details on hiPRS like objects.
+  All the modules come with a complete internal documentation that can be accessed as usual via the **help** command in Python.
 - A Jupyter Notebook, *benchmark/hiPRS and Penalized PRSs.ipynb*, where hiPRS is tested on simulated data and compared with traditional scoring methods. In the same folder, we include additional Jupyter Notebooks and R files where other scoring methods are considered as benchmark. For a comprehensive description of these we refer to the aforementioned work by Massi, Franco et al.
 
 
