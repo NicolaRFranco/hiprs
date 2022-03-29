@@ -2,8 +2,8 @@
 *hiPRS* is a novel algorithm for building Polygenic Risk Scores (PRSs) that account for high-order interaction terms between genetic loci (encoded in terms of Single Nucleotide Polymorfisms, SNPs). The methodology was developed in *Massi, Franco et al., Learning High-Order Interactions for Polygenic Risk Prediction (2022)*, and this repository provides a Python implementation of the routines thereby detailed.
 
 The repository consists of:
-- The source files required for installing the *hiprs* library (see **Installation guidelines** below). The latter consists of 4 main modules: 
-    - the main one, *scores.py*, which allows the user to construct the Polygenic Risk Scores; 
+- The source files required for installing the *hiprs* library (see **Installation guidelines** below). The latter is comprised of 4 main modules: 
+    - *scores.py*, which allows the user to construct the Polygenic Risk Scores; 
     - *interactions.py*, a module for efficiently handling interaction terms; 
     - *mrmr.py* an auxiliary module that implements Maximum Relevance — Minimum Redundancy algorithms; 
     - *snps.py* an auxiliary module used for data simulation. 
