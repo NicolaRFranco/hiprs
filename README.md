@@ -28,7 +28,7 @@ Modules can then be imported either as **import hiprs.scores** or **from hiprs i
 
 
 # Affiliations and acknowledgements
-This repository was developed by Nicola Rares Franco$^{1}$ and Michela Carlotta Massi$^{1,2}$, and it was made public in April 2022. Author affiliations are found below.
+This repository was developed by Nicola Rares Franco<sup>1</sup> and Michela Carlotta Massi<sup>1,2</sup>, and it was made public in April 2022. Author affiliations are found below.
 
-$^{1}$ MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy
-$^{2}$ CHDS - Center for Health Data Science, Human Technopole, Milan, Italy
+<sup>1</sup> MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy
+<sup>2</sup> CHDS - Center for Health Data Science, Human Technopole, Milan, Italy
