@@ -10,9 +10,6 @@ This notebook generates and stores the simulated datasets, with our custom pytho
 4. _**badre.ipynb**_: a Jupyter Notebook containing the source code to run the Deep Neural Network-based algorithm described in [5].
 
 
-Moreover, it includes a file to run the case study experiment on DACHS data:
-
-
 
 ## References
 [1] Behravan, H., Hartikainen, J.M., Tengström, M. et al. (2018) Machine learning identifies interacting genetic variants contributing to breast cancer risk: A case study in Finnish cases and controls. Sci Rep 8, 13149
