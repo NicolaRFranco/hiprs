@@ -27,9 +27,8 @@ Modules can then be imported either as **import hiprs.scores** or **from hiprs i
 *Remark*. The hiprs library is based on the following Python packages: *mlxtend*, *numpy*, *pandas*, *scipy*, *scikit-learn*. These should be automatically installed by either conda or pip when running the commands above.
 
 
-# Authors
-This repository was developed by Nicola Rares Franco<sup>1</sup> and Michela Carlotta Massi<sup>1,2</sup>, and it was made public in April 2022.
+# Development
+This repository was developed and is currently maintained by [Nicola Rares Franco](https://github.com/NicolaRFranco/)<sup>1</sup> and [Michela Carlotta Massi](https://github.com/MichCM)<sup>1,2</sup>.
 
-<sup>1</sup> MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy
-
+<sup>1</sup> MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy <br>
 <sup>2</sup> CHDS - Center for Health Data Science, Human Technopole, Milan, Italy
