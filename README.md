@@ -32,3 +32,5 @@ This repository was developed and is currently maintained by [Nicola Rares Franc
 
 <sup>1</sup> MOX, Department of Mathematics, Politecnico di Milano, Milan, Italy <br>
 <sup>2</sup> CHDS - Center for Health Data Science, Human Technopole, Milan, Italy
+
+The *hiprs* algorithm and methodology were developed at [MOX - Politecnico di Milano](https://mox.polimi.it/) under the support of the [RADPrecise project](https://www.era-learn.eu/network-information/networks/era-permed/1st-joint-transnational-call-for-proposals-2018/personalized-radiotherapy-incorporating-cellular-response-to-irradiation-in-personalized-treatment-planning-to-minimize-radiation-toxicity) (ERA-NET ERA PerMed / FRRB grant agreement n. ERAPERMED2018-244).
