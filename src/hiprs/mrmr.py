@@ -75,6 +75,8 @@ def mRMR(variables, relevance, redundancies, m, correction = False):
     Output:
          (numpy.ndarray)     Sublist of the input variables consisting of the selected ones only.
     """
+    if (len(variables)<m):
+        raise RuntimeError("Cannot select %d terms as there are only %d candidates." % (m, len(variables)))
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         delta = int(correction)
