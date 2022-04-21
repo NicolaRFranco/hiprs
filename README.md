@@ -24,4 +24,4 @@ The hiprs package can be installed via *pip* or *conda* directly from the curren
 
 Modules can then be imported either as **import hiprs.scores** or **from hiprs import scores**.
 
-*Remark*. The hiprs library is based on the following Python packages: *mlxtend*, *numpy*, *pandas*, *scipy*, *scikit-learn*. However, these should be automatically installed by either conda or pip when running the commands above.
+*Remark*. The hiprs library is based on the following Python packages: *mlxtend*, *numpy*, *pandas*, *scipy*, *scikit-learn*. These should be automatically installed by either conda or pip when running the commands above.
