@@ -144,7 +144,7 @@ class PRS(Classifier):
 
 
 class hiPRS(Classifier):
-    """Implementation of hiPRS as detailed in https://arxiv.org/????. It consists of an interaction-aware classifier
+    """Implementation of hiPRS as detailed in https://www.biorxiv.org/content/10.1101/2022.04.22.489134v1. It consists of an interaction-aware classifier
     with categorical covariates. Aside from those coming from the superclass, hiPRS objects have the following
     additional attributes:
 
