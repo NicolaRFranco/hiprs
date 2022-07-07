@@ -56,7 +56,7 @@ def oddsratio(x, y):
     a, b, c, d = contingency(x, y)
     return ((a+0.5)*(d+0.5))/((b+0.5)*(c+0.5))
     
-def mRMR(variables, relevance, redundancies, m, correction = False, quantile = None):    
+def mRMR(variables, relevance, redundancies, m, correction = False, quantile = None, verbose = False):    
     """Implementation of the mRMR selection algorithm (quotient variant).
     
     Input:
@@ -72,6 +72,11 @@ def mRMR(variables, relevance, redundancies, m, correction = False, quantile = N
                                            intended as evaluating to infinity (if several
                                            infinite ratios are encountered, higher relevances
                                            are preferred).
+         quantile      (float)             Quantile for the minimum relevance required by each
+                                           feature. Defaults to None, thus not excluding any
+                                           candidate
+         verbose       (bool)              If True, prints the values of the objective function
+                                           during selection. Defaults to False.
     Output:
          (numpy.ndarray)     Sublist of the input variables consisting of the selected ones only.
     """
@@ -96,6 +101,8 @@ def mRMR(variables, relevance, redundancies, m, correction = False, quantile = N
                 new = np.argmax(relev)
             else:
                 new = np.argmax(V)
+            if(verbose):
+                print("Current mRMR ratio = %.3f. Rel = %.3f, red = %.3f.." % (V[new], relevance[new], redund[new]))
             picked[new] = True
             
     return variables[picked]
