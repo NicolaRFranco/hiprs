@@ -82,7 +82,7 @@ def mRMR(variables, relevance, redundancies, m, correction = False, quantile = N
         delta = int(correction)
         picked = np.array([False]*len(relevance))
         
-        q = -1.0 if(quantitle == None) else np.quantile(relevance, quantile)
+        q = -1.0 if(quantile == None) else np.quantile(relevance, quantile)
         while(np.sum(picked)<m):
             redund = np.mean(redundancies[picked], axis = 0)
             redund[np.isnan(redund)] = 1
