@@ -56,7 +56,7 @@ def oddsratio(x, y):
     a, b, c, d = contingency(x, y)
     return ((a+0.5)*(d+0.5))/((b+0.5)*(c+0.5))
     
-def mRMR(variables, relevance, redundancies, m, correction = False):    
+def mRMR(variables, relevance, redundancies, m, correction = False, quantile = None):    
     """Implementation of the mRMR selection algorithm (quotient variant).
     
     Input:
@@ -81,13 +81,15 @@ def mRMR(variables, relevance, redundancies, m, correction = False):
         warnings.simplefilter("ignore")
         delta = int(correction)
         picked = np.array([False]*len(relevance))
-
+        
+        q = -1.0 if(quantitle == None) else np.quantile(relevance, quantile)
         while(np.sum(picked)<m):
             redund = np.mean(redundancies[picked], axis = 0)
             redund[np.isnan(redund)] = 1
             V = relevance / (delta+redund)
             V[picked] = -np.inf
             V[np.isnan(V)] = -np.inf
+            V[relevance < q] = -np.inf
             if(np.max(V) == np.inf):
                 relev = relevance + 0
                 relev[V != np.inf] = -np.inf
